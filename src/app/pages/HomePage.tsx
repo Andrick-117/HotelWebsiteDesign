@@ -2,34 +2,10 @@ import { useNavigate } from "react-router";
 import { ChevronDown } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import hotelLogo from "@/imports/logosf.png";
+import habitacionVip from "@/imports/habitacionvip.jpg";
+import picinaturi from "@/imports/picinaturi.jpg";
+import picina from "@/imports/picina.jpg";
 import { goldGradient, GoldDivider } from "@/app/components/shared";
-
-const HIGHLIGHTS = [
-  {
-    to: "/hotel",
-    img: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=700&h=500&fit=crop&auto=format",
-    label: "El Hotel",
-    sub: "Habitaciones & Suites",
-  },
-  {
-    to: "/piscinas",
-    img: "https://images.unsplash.com/photo-1745781145895-fc006ead630c?w=700&h=500&fit=crop&auto=format",
-    label: "Piscinas",
-    sub: "Área Recreativa",
-  },
-  {
-    to: "/restaurante",
-    img: "https://images.unsplash.com/photo-1779094542793-118e751cedc5?w=700&h=500&fit=crop&auto=format",
-    label: "Restaurante",
-    sub: "La Mesa del Lago",
-  },
-  {
-    to: "/contacto",
-    img: "https://images.unsplash.com/photo-1696551116918-398a1dbfac02?w=700&h=500&fit=crop&auto=format",
-    label: "Contacto",
-    sub: "Reservaciones",
-  },
-];
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -128,17 +104,30 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {HIGHLIGHTS.map(({ to, img, label, sub }) => (
+            {[
+              { to: "/hotel", img: habitacionVip, label: "El Hotel", sub: "Habitaciones & Suites", isImport: true },
+              { to: "/piscinas", img: picinaturi, label: "Piscinas", sub: "Área Recreativa", isImport: true },
+              { to: "/restaurante", img: picina, label: "Restaurante", sub: "La Mesa del Lago", isImport: true },
+              { to: "/contacto", img: "https://images.unsplash.com/photo-1696551116918-398a1dbfac02?w=700&h=500&fit=crop&auto=format", label: "Contacto", sub: "Reservaciones", isImport: false },
+            ].map(({ to, img, label, sub, isImport }) => (
               <button
                 key={to}
                 onClick={() => navigate(to)}
                 className="relative overflow-hidden group rounded-sm text-left h-72 cursor-pointer"
               >
-                <img
-                  src={img}
-                  alt={label}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                {isImport ? (
+                  <ImageWithFallback
+                    src={img as string}
+                    alt={label}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                ) : (
+                  <img
+                    src={img as string}
+                    alt={label}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#382D23]/90 via-[#382D23]/30 to-transparent transition-all duration-300 group-hover:from-[#382D23]/70" />
                 <div className="absolute bottom-0 left-0 right-0 p-5">
                   <p className="text-[#CDA249] text-xs tracking-[0.3em] uppercase mb-1">{sub}</p>
